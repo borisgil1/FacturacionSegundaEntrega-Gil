@@ -1,5 +1,4 @@
-package service;
-
+package com.example.demo.service;
 import com.example.demo.models.Cliente;
 import com.example.demo.models.Producto;
 import com.example.demo.models.Venta;
