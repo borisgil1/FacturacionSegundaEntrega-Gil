@@ -12,7 +12,7 @@ import java.util.List;
 public class Controller {
 
     @Autowired
-    private Service service;
+    public Service service;
 
     @GetMapping
     public String index() {
