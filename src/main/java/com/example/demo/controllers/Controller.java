@@ -3,113 +3,81 @@ package com.example.demo.controllers;
 import com.example.demo.models.Cliente;
 import com.example.demo.models.Producto;
 import com.example.demo.models.Venta;
-import com.example.demo.repository.ClienteRepository;
-import com.example.demo.repository.VentaRepository;
-import com.example.demo.repository.ProductoRepository;
+import com.example.demo.service.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@RequestMapping("/api")
 public class Controller {
 
     @Autowired
-    private ClienteRepository clienteRepository;
-
-    @Autowired
-    private ProductoRepository productoRepository;
-
-    @Autowired
-    private VentaRepository ventaRepository;
-
+    private Service service;
 
     @GetMapping
     public String index() {
-        return "Conectado";
+        return service.index();
     }
 
-    @GetMapping("clientes")
+    @GetMapping("/clientes")
     public List<Cliente> getClientes() {
-        return clienteRepository.findAll();
+        return service.getClientes();
     }
 
-    @GetMapping("productos")
+    @GetMapping("/productos")
     public List<Producto> getProductos() {
-        return productoRepository.findAll();
+        return service.getProductos();
     }
 
-    @GetMapping("ventas")
+    @GetMapping("/ventas")
     public List<Venta> getVentas() {
-        return ventaRepository.findAll();
+        return service.getVentas();
     }
 
-    @PostMapping("alta/cliente")
+    @PostMapping("/alta/cliente")
     public String postCliente(@RequestBody Cliente cliente) {
-        clienteRepository.save(cliente);
-        return "Cliente guardado";
+        return service.postCliente(cliente);
     }
 
-    @PostMapping("alta/producto")
+    @PostMapping("/alta/producto")
     public String postProducto(@RequestBody Producto producto) {
-        productoRepository.save(producto);
-        return "Producto guardado";
+        return service.postProducto(producto);
     }
 
-    @PostMapping("alta/venta")
+    @PostMapping("/alta/venta")
     public String postVenta(@RequestBody Venta venta) {
-        ventaRepository.save(venta);
-        return "Venta guardada";
+        return service.postVenta(venta);
     }
 
-    @PutMapping("modificarCliente/{id}")
+    @PutMapping("/modificarCliente/{id}")
     public String updateCliente(@PathVariable Long id, @RequestBody Cliente cliente) {
-        Cliente updateCliente = clienteRepository.findById(id).get();
-        updateCliente.setNombre(cliente.getNombre());
-        updateCliente.setEmail(cliente.getEmail());
-        clienteRepository.save(updateCliente);
-        return "Cliente modificado";
+        return service.updateCliente(id, cliente);
     }
 
-    @PutMapping("modificarProducto/{id}")
+    @PutMapping("/modificarProducto/{id}")
     public String updateProducto(@PathVariable Long id, @RequestBody Producto producto) {
-        Producto updateProducto = productoRepository.findById(id).get();
-        updateProducto.setNombre(producto.getNombre());
-        updateProducto.setPrecio(producto.getPrecio());
-        productoRepository.save(updateProducto);
-        return "Producto modificado";
+        return service.updateProducto(id, producto);
     }
 
-    @PutMapping("modificarVenta/{id}")
+    @PutMapping("/modificarVenta/{id}")
     public String updateVenta(@PathVariable Long id, @RequestBody Venta venta) {
-        Venta updateVenta = ventaRepository.findById(id).get();
-        updateVenta.setCantidad(venta.getCantidad());
-        updateVenta.setFecha(venta.getFecha());
-        ventaRepository.save(updateVenta);
-        return "Venta modificada";
+        return service.updateVenta(id, venta);
     }
 
-    @DeleteMapping("bajaCliente/{id}")
+    @DeleteMapping("/bajaCliente/{id}")
     public String deleteCliente(@PathVariable Long id) {
-
-        Cliente deleteCliente = clienteRepository.findById(id).get();
-        clienteRepository.delete(deleteCliente);
-        return "Cliente eliminado";
+        return service.deleteCliente(id);
     }
 
-    @DeleteMapping("bajaProducto/{id}")
+    @DeleteMapping("/bajaProducto/{id}")
     public String deleteProducto(@PathVariable Long id) {
-
-        Producto deleteProducto = productoRepository.findById(id).get();
-        productoRepository.delete(deleteProducto);
-        return "Producto eliminado";
+        return service.deleteProducto(id);
     }
 
-    @DeleteMapping("bajaVenta/{id}")
+    @DeleteMapping("/bajaVenta/{id}")
     public String deleteVenta(@PathVariable Long id) {
-
-        Venta deleteVenta = ventaRepository.findById(id).get();
-        ventaRepository.delete(deleteVenta);
-        return "Venta eliminada";
+        return service.deleteVenta(id);
     }
 }
