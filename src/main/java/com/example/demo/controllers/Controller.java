@@ -1,4 +1,8 @@
 package com.example.demo.controllers;
+import com.example.demo.service.UserService;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import com.example.demo.models.Cliente;
 import com.example.demo.models.Producto;
 import com.example.demo.models.Venta;
@@ -11,7 +15,14 @@ import java.util.List;
 @RequestMapping("/api")
 public class Controller {
 
+    @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<?> getUsers() {
+        List<String> users = userService.getUsuarios();
+        return ResponseEntity.ok(users);
+    }
+
     @Autowired
+    private UserService userService;
     public Service service;
 
     @GetMapping
